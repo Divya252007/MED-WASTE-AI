@@ -1,0 +1,9 @@
+streamlit
+pandas
+pillow
+qrcode[pil]
+opencv-python-headless
+bcrypt
+python-dotenv
+plotly
+google-genai
