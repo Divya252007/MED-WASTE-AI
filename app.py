@@ -923,22 +923,22 @@ def dashboard_page():
     # MAIN HEADER
     # =================================================
 
-    st.markdown(
+        st.markdown(
         f"""
-        <div class="portal-header">
-            <div class="portal-label">
-                MED WASTE AI / {role.upper()}
-            </div>
+<div class="portal-header">
+    <div class="portal-label">
+        MED WASTE AI / {role.upper()}
+    </div>
 
-            <div class="portal-title">
-                {current_portal["icon"]} {current_portal["title"]}
-            </div>
+    <div class="portal-title">
+        {current_portal["icon"]} {current_portal["title"]}
+    </div>
 
-            <div class="portal-description">
-                {current_portal["description"]}
-            </div>
-        </div>
-        """,
+    <div class="portal-description">
+        {current_portal["description"]}
+    </div>
+</div>
+""",
         unsafe_allow_html=True
     )
 
