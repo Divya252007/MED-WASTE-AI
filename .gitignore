@@ -1,7 +1,7 @@
+.env
 .venv/
 __pycache__/
 *.pyc
-.env
 .streamlit/secrets.toml
 med_waste.db
 uploads/*
