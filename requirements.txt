@@ -8,3 +8,4 @@ python-dotenv
 plotly
 google-genai
 folium
+streamlit-folium
