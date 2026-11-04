@@ -7,3 +7,4 @@ bcrypt
 python-dotenv
 plotly
 google-genai
+folium
