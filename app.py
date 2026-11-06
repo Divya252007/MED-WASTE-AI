@@ -12,10 +12,12 @@ from admin_portal import admin_portal_page
 from doctor_portal import doctor_portal_page
 from nurse_portal import nurse_portal_page
 from driver_portal import driver_portal_page
+
 from collection_management import collection_management_page
 from reports_analystics import reports_analytics_page
 from notification import notification_page
 from location_tracking import location_tracking_page
+from chatbot import chatbot_page
 
 
 # =====================================================
@@ -425,6 +427,8 @@ def apply_theme():
             margin-top: 4px;
         }}
 
+        /* MAIN PORTAL HEADER */
+
         .portal-header {{
             background: var(--surface);
             border: 1px solid var(--border);
@@ -538,7 +542,7 @@ def apply_theme():
         unsafe_allow_html=True
     )
 
-    # Medical emoji decorations
+    # MEDICAL EMOJI DECORATIONS
     st.markdown(
         """
         <div class="medical-decoration-layer">
@@ -556,7 +560,7 @@ def apply_theme():
     )
 
 
-# Apply theme before displaying the page
+# APPLY THEME
 apply_theme()
 
 
@@ -611,11 +615,9 @@ def first_time_admin_setup():
                 or not username.strip()
                 or not password
             ):
-
                 st.error("Please fill in all required fields.")
 
             elif password != confirm:
-
                 st.error("Passwords do not match.")
 
             else:
@@ -789,6 +791,7 @@ def get_menu_items(role):
         return [
             "Dashboard Overview",
             "Waste Records",
+            "AI Waste Assistant",
             "QR Scanner",
             "Notifications"
         ]
@@ -798,6 +801,7 @@ def get_menu_items(role):
         return [
             "Dashboard Overview",
             "Waste Records",
+            "AI Waste Assistant",
             "Collection Management",
             "QR Scanner",
             "Notifications"
@@ -834,9 +838,7 @@ def dashboard_page():
     menu_items = get_menu_items(role)
 
     if not menu_items:
-        st.error(
-            "No navigation options are available for this account."
-        )
+        st.error("No navigation options are available.")
         return
 
     if st.session_state.selected_page not in menu_items:
@@ -861,7 +863,6 @@ def dashboard_page():
         )
 
         st.divider()
-
         st.caption("MAIN MENU")
 
         selected_page = st.radio(
@@ -874,7 +875,6 @@ def dashboard_page():
         st.session_state.selected_page = selected_page
 
         st.divider()
-
         st.caption("APPEARANCE")
 
         selected_theme = st.selectbox(
@@ -884,12 +884,10 @@ def dashboard_page():
         )
 
         if selected_theme != st.session_state.theme:
-
             st.session_state.theme = selected_theme
             st.rerun()
 
         st.divider()
-
         st.caption("SIGNED IN AS")
 
         st.markdown(
@@ -923,22 +921,16 @@ def dashboard_page():
     # MAIN HEADER
     # =================================================
 
-        st.markdown(
-        f"""
-<div class="portal-header">
-    <div class="portal-label">
-        MED WASTE AI / {role.upper()}
+    header_html = f"""
+    <div class="portal-header">
+        <div class="portal-label">MED WASTE AI / {role.upper()}</div>
+        <div class="portal-title">{current_portal["icon"]} {current_portal["title"]}</div>
+        <div class="portal-description">{current_portal["description"]}</div>
     </div>
+    """
 
-    <div class="portal-title">
-        {current_portal["icon"]} {current_portal["title"]}
-    </div>
-
-    <div class="portal-description">
-        {current_portal["description"]}
-    </div>
-</div>
-""",
+    st.markdown(
+        header_html,
         unsafe_allow_html=True
     )
 
@@ -973,6 +965,12 @@ def dashboard_page():
     ]:
 
         waste_management_page(user)
+
+    elif selected_page == "AI Waste Assistant" and role in [
+        "doctor", "staff"
+    ]:
+
+        chatbot_page(user)
 
     elif selected_page == "QR Scanner":
 
